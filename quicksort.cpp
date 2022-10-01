@@ -34,8 +34,8 @@ void qsort(IntRange rng){
 //		std::cout << std::endl;
 		std::free(res.begin);
 
-		qsort({&rng.begin[0], &rng.begin[less]});
-		qsort({&rng.begin[len - grt], &rng.begin[len]});
+		qsort({rng.begin, rng.begin + less});
+		qsort({rng.begin + (len - grt), rng.begin + len});
 	}else if(rng.end - rng.begin == 2 && rng.begin[0] > rng.begin[1]){
 		rng.begin[0] = rng.begin[0] + rng.begin[1];
 		rng.begin[1] = rng.begin[0] - rng.begin[1];
@@ -43,7 +43,7 @@ void qsort(IntRange rng){
 	}
 }
 
-
+/*
 int main(){
 	int rng[20] = {-5, -3, -7, -5, 6, -3, 0, -5, 0, 2, 3, 6, 3, -9, 8, 5, -7, 5, 2, -6};
 //	int rng[6] = {0, 1, 0, 1, 1, 0};
@@ -52,4 +52,29 @@ int main(){
 	for(int i = 0; i < 20; i++){
 		std::cout << rng[i] << ", ";
 	}
+}*/
+
+#include <iostream>
+#include <vector>
+#include <random>
+#include <algorithm>
+int main()
+{
+    auto const N = 1000000u;
+    std::vector<int> v(N);
+    
+    int seed;
+    std::cin >> seed;
+    std::mt19937 gen(seed);
+    std::uniform_int_distribution<int> distr(0, 1 << 16);
+    for(auto i = 0u; i < N; ++i)
+        v[i] = distr(gen);
+
+    IntRange const range =
+    {
+        .begin = &v[0],
+        .end   = &v[0] + N,
+    };
+    qsort(range);
+    std::cout << std::is_sorted(range.begin, range.end) << std::endl;
 }
