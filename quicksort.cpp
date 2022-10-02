@@ -42,18 +42,73 @@ void qsort(IntRange rng){
 		rng.begin[0] = rng.begin[0] - rng.begin[1];
 	}
 }
-
 /*
-int main(){
-	int rng[20] = {-5, -3, -7, -5, 6, -3, 0, -5, 0, 2, 3, 6, 3, -9, 8, 5, -7, 5, 2, -6};
-//	int rng[6] = {0, 1, 0, 1, 1, 0};
-	qsort({&rng[0], &rng[19] + 1});
-//	qsort({&rng[0], &rng[11]});
-	for(int i = 0; i < 20; i++){
-		std::cout << rng[i] << ", ";
+void qsort(IntRange rng){
+	if(rng.end - rng.begin > 2){
+//		IntRange res;
+//		res.begin = static_cast<int *>(std::malloc((rng.end-rng.begin)*4));
+//		res.end = res.begin + (rng.end - rng.begin) + 1;
+
+		int less = 0;
+		int len = rng.end - rng.begin;
+		int div = rng.begin[0];
+		int divpos = 0;
+		for(int i = 1; i < len; i++){
+			if(rng.begin[i] <= div){
+				divpos += 1;
+			}
+		}
+		int grt = 0;
+		int next = rng.begin[divpos + 1];
+		
+		for(int i = 1; i < len; i++){
+			int j = i/2 + (i%2 == 0 ? divpos + grt : 1.5 + less);
+			j = j < len ? j : i;
+			std::cout << j << std::endl;
+			if(rng.begin[j] <= div){
+				rng.begin[less] = rng.begin[j];
+				less ++;
+			}else{
+				rng.begin[divpos + grt + 1] = rng.begin[j];
+				grt ++;
+			}
+		}
+		if(less < divpos){
+			rng.begin[less] = next;
+		}else{
+			rng.begin[len] = next;
+		}
+		rng.begin[divpos] = div;
+
+		for(int i = 0; i < len; i++){
+			std::cout << rng.begin[i] << ", ";
+		}
+		std::cout << std::endl;
+
+		std::cout << len << " " << less << " " <<grt << " " << divpos << std::endl;
+		
+//		std::cout << std::endl;
+
+		qsort({rng.begin, rng.begin + divpos});
+		qsort({rng.begin + divpos + 2, rng.begin + len});
+	}else if(rng.end - rng.begin == 2 && rng.begin[0] > rng.begin[1]){
+		rng.begin[0] = rng.begin[0] + rng.begin[1];
+		rng.begin[1] = rng.begin[0] - rng.begin[1];
+		rng.begin[0] = rng.begin[0] - rng.begin[1];
 	}
 }*/
 
+
+int main(){
+	int rng[20] = {5, 0, 1, 8, 2, 5, 1, 7, 2, 4};
+//	int rng[6] = {0, 1, 0, 1, 1, 0};
+	qsort({&rng[0], &rng[9] + 1});
+//	qsort({&rng[0], &rng[11]});
+	for(int i = 0; i < 10; i++){
+		std::cout << rng[i] << ", ";
+	}
+}
+/*
 #include <iostream>
 #include <vector>
 #include <random>
@@ -78,3 +133,4 @@ int main()
     qsort(range);
     std::cout << std::is_sorted(range.begin, range.end) << std::endl;
 }
+*/
