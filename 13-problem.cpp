@@ -59,3 +59,7 @@ char* itoa(std::int64_t num) {
     }
     return str;
 }
+
+int main(){
+	std::cout << itoa(-324234) << std::endl;
+}
