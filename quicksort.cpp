@@ -98,7 +98,7 @@ void qsort(IntRange rng){
 	}
 }*/
 
-
+/*
 int main(){
 	int rng[20] = {5, 0, 1, 8, 2, 5, 1, 7, 2, 4};
 //	int rng[6] = {0, 1, 0, 1, 1, 0};
@@ -107,8 +107,8 @@ int main(){
 	for(int i = 0; i < 10; i++){
 		std::cout << rng[i] << ", ";
 	}
-}
-/*
+}*/
+
 #include <iostream>
 #include <vector>
 #include <random>
@@ -133,4 +133,4 @@ int main()
     qsort(range);
     std::cout << std::is_sorted(range.begin, range.end) << std::endl;
 }
-*/
+
