@@ -68,7 +68,7 @@ int main(){
 		vec3 b2 = side2.b - side2.c;
 		vec3 lightRay2 = intr2 - light;
 		vec3 n2 = cross(a2, b2);
-		
+
 		float brightness2 = 1 - (1 - abss(dot(lightRay2, n2)/(length(lightRay2)*length(n2)))) * (1 - abss(dot(lightRay2 + intr2 - view.position, n2)/(length(lightRay2 + intr2 - view.position)*length(n2))));
 
 		Triangle side3 = {ramiel.pos - x*ramiel.size, ramiel.pos - y*ramiel.size, ramiel.pos - z*ramiel.size};
@@ -77,7 +77,7 @@ int main(){
 		vec3 b3 = side3.b - side3.c;
 		vec3 lightRay3 = intr3 - light;
 		vec3 n3 = cross(a3, b3);
-				
+
 		float brightness3 = 1 - (1 - abss(dot(lightRay3, n3)/(length(lightRay3)*length(n3)))) * (1 - abss(dot(lightRay3 + intr3 - view.position, n3)/(length(lightRay3 + intr3 - view.position)*length(n3))));
 
 		Triangle side4 = {ramiel.pos - x*ramiel.size, ramiel.pos + y*ramiel.size, ramiel.pos - z*ramiel.size};
@@ -86,7 +86,7 @@ int main(){
 		vec3 b4 = side4.b - side4.c;
 		vec3 lightRay4 = intr4 - light;
 		vec3 n4 = cross(a4, b4);
-						
+
 		float brightness4 = 1 - (1 - abss(dot(lightRay4, n4)/(length(lightRay4)*length(n4)))) * (1 - abss(dot(lightRay4 + intr4 - view.position, n4)/(length(lightRay4 + intr4 - view.position)*length(n4))));
 
 		if(intr1.x != 0 && intr1.y != 0 && intr1.z != 0){
@@ -109,7 +109,7 @@ int main(){
 			unsigned int const r = brightness4*2.;
 			unsigned int const g = brightness4*60.;
 			unsigned int const b = brightness4*252;
-			out << r << " " << g << " " << b << " ";			
+			out << r << " " << g << " " << b << " ";
 		}
 		else{
 			out << 15 << " " << 149 << " " << 252 << " ";
