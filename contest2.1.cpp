@@ -62,24 +62,24 @@ void quicksort(RandomIt begin, RandomIt end, Compare cmp){
 	}
 }
 
-template<std::uint64_t n>
-std::uint64_t fib64(){
-	return fib64<n - 2>() + fib64<n-1>();
-}
+// template<std::uint64_t a0, std::uint64_t a1>
+// std::uint64_t fibtemp<a0, a1, 0>(){return a0;}
 
-template<>
-std::uint64_t fib64<0>(){return 0;}
+// template<std::uint64_t a0, std::uint64_t a1>
+// std::uint64_t fibtemp<a0, a1, 1>(){return a1;}
 
-template<>
-std::uint64_t fib64<1>(){return 1;}
+// template<std::uint64_t a0, std::uint64_t a1, std::uint16_t const n>
+// std::uint64_t fibtemp(){
+// 	return fibtemp<a0, a1, n - 2>() + fibtemp<a0, a1, n-1>();
+// }
 
 #include <utility>
-template<std::size_t... I>
-void print(std::index_sequence<I...>)
-{
-    ((std::cout << fib64<I>() << ' '),...);
-    std::cout << std::endl;
-}
+// template<std::size_t... I>
+// void print(std::index_sequence<I...>)
+// {
+//     ((std::cout << fib64<I>() << ' '),...);
+//     std::cout << std::endl;
+// }
 
 template<typename T>
 struct Node
@@ -125,8 +125,63 @@ struct is_floating_point<long double>{
 	static constexpr bool value = 1;
 };
 
+template<typename T>
+struct is_pointer{
+	static constexpr bool value = 0;
+};
+
+template<typename T>
+struct is_pointer<T*>{
+	static constexpr bool value = 1;
+};
+
+template<typename T>
+struct is_pointer<T* const>{
+	static constexpr bool value = 1;
+};
+
+template<typename T>
+struct remove_pointer{
+	using type = T;
+};
+template<typename T>
+struct remove_pointer<T*>{
+	using type = T;
+};
+
+template<typename T>
+struct remove_pointer<T* const>{
+	using type = T;
+};
+
+template<std::uint64_t a0, std::uint64_t a1, std::uint16_t... fib>
+std::uint64_t fib64_impl(std::uint8_t const n, std::integer_sequence<std::uint16_t, fib...> nums){
+	constexpr std::uint64_t array[256] = {(fib == 0 ? a0 : fib == 1 ? a1 : array[fib-1] + array[fib-2])...};
+	return array[n];
+}
+
+template<std::uint64_t a0, std::uint64_t a1>
+std::uint64_t fib64(std::uint8_t const n){
+	return fib64_impl<a0, a1>(n, std::make_integer_sequence<std::uint16_t, 256>{});
+}
+
+// int main()
+// {
+// 	int n;
+// 	std::cin >> n;
+// 	int const m = n;
+// 	std::cout << fibtemp<1, 2, 6>();
+// }
+
 int main()
 {
-	is_floating_point<int>::value;
-	std::cout << a.value;
+    using u64 = std::uint64_t;
+    u64 const N = 400000;
+    u64 sum1 = 0;
+    for(u64 i = 0; i < N; ++i)
+        sum1 += fib64<1, 3>(i % 256);
+    u64 sum2 = 0;
+    for(u64 i = 0; i < N; ++i)
+        sum2 += fib64<2, 5>(i % 256);
+    std::cout << sum1 << ' ' << sum2 << std::endl;
 }
